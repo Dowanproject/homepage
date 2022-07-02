@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="main-style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta property="og:title" content="도완">
 <meta property="og:description" content="컴퓨터 좋아하는 도완">
 <meta property="og:image" content="ch.png">
-<title>도완이</title>
+<link rel="shortcut icon" href="ico.ico">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+<title>도완</title>
 </head>
 <body>
     <!-- Channel Plugin Scripts -->
@@ -51,15 +55,35 @@
     ChannelIO('boot', {
       "pluginKey": "c2eff514-6926-4945-8981-475f9a19ec5a"
     });
+    const crypto = require('crypto');
+
+const memberId = 'lucas';
+const secretKey = '3925178f49172699173a8ccb7aafce63';
+const expectedHash = "72f9e7d0684d8f47f0bade1e4c1ed3c3070b88efcf8906efc060d46357eb6b00";
+
+const hash = crypto.createHmac('sha256', Buffer.from(secretKey, 'hex'))
+                .update(memberId)
+                .digest('hex');
   </script>
   <!-- End Channel Plugin -->
+
+  
 <div class="wrap">
 <div class="profile"></div>
-<h1 class="main">도완이</h1>
-<p class="sub">컴퓨터 좋아하는 도완이</p>
-<a class="naver" target="_blank" href="https://naver.com/"><span>저에 대해</span></a>
-<a class="naver" href="#"><span>준비중</span></a>
-
+<h1 class="main">도완</h1>
+<p class="sub">컴퓨터 좋아하는 도완</p>
+<a class="About" target="_blank" href="./About.html"><span>저에 대해</span></a>
+<a onclick="stanby()"><span>준비중</span>
+  <script>
+    function stanby() {
+Swal.fire({
+  icon: 'error',
+  title: '오류',
+  text: '해당 기능은 준비중 입니다.',
+  confirmButtonText: '확인'
+})
+    }
+  </script>
 </div>
 </body>
 </html>

@@ -1,0 +1,7 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+* {
+font-family: "Pretendard",serif;
+}
+body {
+background-color: #B1DDD6;
+}
