@@ -15,57 +15,48 @@
 <title>도완</title>
 </head>
 <body>
-    <!-- Channel Plugin Scripts -->
+<!-- Channel Plugin Scripts -->
 <script>
-    (function() {
-      var w = window;
-      if (w.ChannelIO) {
-        return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+  (function() {
+    var w = window;
+    if (w.ChannelIO) {
+      return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+    }
+    var ch = function() {
+      ch.c(arguments);
+    };
+    ch.q = [];
+    ch.c = function(args) {
+      ch.q.push(args);
+    };
+    w.ChannelIO = ch;
+    function l() {
+      if (w.ChannelIOInitialized) {
+        return;
       }
-      var ch = function() {
-        ch.c(arguments);
-      };
-      ch.q = [];
-      ch.c = function(args) {
-        ch.q.push(args);
-      };
-      w.ChannelIO = ch;
-      function l() {
-        if (w.ChannelIOInitialized) {
-          return;
-        }
-        w.ChannelIOInitialized = true;
-        var s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.async = true;
-        s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
-        s.charset = 'UTF-8';
-        var x = document.getElementsByTagName('script')[0];
-        x.parentNode.insertBefore(s, x);
-      }
-      if (document.readyState === 'complete') {
-        l();
-      } else if (window.attachEvent) {
-        window.attachEvent('onload', l);
-      } else {
-        window.addEventListener('DOMContentLoaded', l, false);
-        window.addEventListener('load', l, false);
-      }
-    })();
-    ChannelIO('boot', {
-      "pluginKey": "c2eff514-6926-4945-8981-475f9a19ec5a"
-    });
-    const crypto = require('crypto');
-
-const memberId = 'lucas';
-const secretKey = '3925178f49172699173a8ccb7aafce63';
-const expectedHash = "72f9e7d0684d8f47f0bade1e4c1ed3c3070b88efcf8906efc060d46357eb6b00";
-
-const hash = crypto.createHmac('sha256', Buffer.from(secretKey, 'hex'))
-                .update(memberId)
-                .digest('hex');
-  </script>
-  <!-- End Channel Plugin -->
+      w.ChannelIOInitialized = true;
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+      s.charset = 'UTF-8';
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+    if (document.readyState === 'complete') {
+      l();
+    } else if (window.attachEvent) {
+      window.attachEvent('onload', l);
+    } else {
+      window.addEventListener('DOMContentLoaded', l, false);
+      window.addEventListener('load', l, false);
+    }
+  })();
+  ChannelIO('boot', {
+    "pluginKey": "c2eff514-6926-4945-8981-475f9a19ec5a"
+  });
+</script>
+<!-- End Channel Plugin -->
 
   
 <div class="wrap">
@@ -76,11 +67,27 @@ const hash = crypto.createHmac('sha256', Buffer.from(secretKey, 'hex'))
 <a onclick="stanby()"><span>준비중</span>
   <script>
     function stanby() {
-Swal.fire({
-  icon: 'error',
-  title: '오류',
-  text: '해당 기능은 준비중 입니다.',
-  confirmButtonText: '확인'
+      Swal.fire({
+        icon: 'error',
+        title: '오류',
+  html:
+    '<h2>해당 기능은 준비중 입니다.</h2><strong></strong>초후 닫힙니다.<br/><br/>',
+  timer: 3000,
+  didOpen: () => {
+    const content = Swal.getHtmlContainer()
+    const $ = content.querySelector.bind(content)
+
+    Swal.showLoading()
+
+    timerInterval = setInterval(() => {
+      Swal.getHtmlContainer().querySelector('strong')
+        .textContent = (Swal.getTimerLeft() / 1000)
+          .toFixed(0)
+    }, 100)
+  },
+  willClose: () => {
+    clearInterval(timerInterval)
+  }
 })
     }
   </script>
